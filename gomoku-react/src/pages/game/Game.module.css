@@ -1,0 +1,15 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+
+.container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem;
+}

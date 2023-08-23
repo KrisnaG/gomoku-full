@@ -1,0 +1,89 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+
+.tile {
+    cursor: pointer;
+    background-color: #CCCCCC;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 100%;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-weight: bolder;
+}
+
+.black {
+    cursor: not-allowed;
+    background-color: #000000;
+    color: #FFF;
+}
+
+.white {
+    cursor: not-allowed;
+    background-color: #FFFFFF;
+    color: #000;
+}
+
+.blackWin,
+.whiteWin {
+    cursor: not-allowed;
+    background-color: transparent;
+    position: relative;
+}
+
+.blackWin {
+    color: #FFF;
+}
+
+.whiteWin {
+    color: #000;
+}
+
+.blackWin::before,
+.whiteWin::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border-radius: 100%;
+    border: 2px solid #00FF00;
+    box-sizing: border-box;
+}
+
+.blackWin::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    border-radius: 100%;
+    background-color: #000;
+    box-sizing: border-box;
+}
+
+.whiteWin::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    border-radius: 100%;
+    background-color: #FFF;
+    box-sizing: border-box;
+}
+
+.blackWin p,
+.whiteWin p {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+}

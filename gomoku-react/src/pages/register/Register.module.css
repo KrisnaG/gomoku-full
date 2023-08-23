@@ -1,0 +1,46 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+ 
+.container {
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: #FFF;
+}
+  
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+  
+.label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+  
+.input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+  
+.button {
+    padding: 0.5rem 1rem;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+  
+.button:hover {
+    background-color: #0056B3;
+}
+
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

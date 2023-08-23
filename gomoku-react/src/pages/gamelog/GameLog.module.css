@@ -1,0 +1,9 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+ 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

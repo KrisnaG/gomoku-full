@@ -1,0 +1,19 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+
+.general {
+    padding: 0.5rem 1rem;
+    margin: 2rem;
+    background-color: #2196F3;
+    color: #FFF;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.general:hover{
+    background-color: #0056B3;
+}

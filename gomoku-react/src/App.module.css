@@ -1,0 +1,21 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+
+.main {
+    flex: 1;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    gap: 2rem;
+    margin: 3rem auto;
+    padding: 3rem 5rem;
+    border-radius: 1rem;
+    /* background-color: #D8323B; */
+    border: solid 5px #D8323B;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,49 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+
+.container {
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: #FFF;
+    text-align: center;
+}
+
+.boardSelect {
+    padding: 0.5rem;
+    font-size: 16px;
+    border: 1px solid #CCC;
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.boardSelect:hover {
+    background-color: #b8b2b2;
+    cursor: pointer;
+}
+
+.startButton {
+    padding: 0.5rem 1rem;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.5rem;
+    width: 80%;
+    height: 3rem;
+    box-sizing: border-box;
+}
+
+.startButton:hover {
+    background-color: #0056B3;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+}

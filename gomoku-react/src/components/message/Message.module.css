@@ -1,0 +1,51 @@
+/**
+ * @author Krisna Gusti (kgusti@myune.edu.au)
+ */
+
+.message {
+    padding: 1.5rem;
+    box-sizing: border-box;
+    color: white;
+    font-weight: 700;
+    border-radius: 1rem;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+  
+.info {
+    background-color: #BABEC2;
+}
+  
+.success {
+    background-color: #04AA6D;
+}
+  
+.warning {
+    background-color: #FF9800;
+}
+  
+.error {
+    background-color: #F44336;
+}
+
+.black {
+    background-color: #000;
+    color: #FFF;
+    border: solid 1px #FFF;
+}
+
+.white {
+    background-color: #FFF;
+    color: #000;
+    border: solid 1px #000;
+}
+
+.draw {
+    background-color: #53f0b6;
+    color: #000;
+}
