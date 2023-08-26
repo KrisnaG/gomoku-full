@@ -7,6 +7,8 @@ A react web-based implementation of the classic Gomoku (Five in a Row) game.
 
 ## Usage 
 
+### Front-end: gomoku-react
+
 Navigate to the project directory:
 
 ```bash
@@ -29,7 +31,13 @@ npm start
 
 Access the app in your web browser at http://localhost:3000.
 
-## Gameplay
+### Back-end: gomoku-react
+
+TODO
+
+## Gomoku
+
+### Gameplay
 
 1. Log in or register to access the game.
 2. Choose a board size between 5x5 and 20x20.
@@ -40,7 +48,7 @@ Access the app in your web browser at http://localhost:3000.
 7. Visit the games log page to view saved games and statistics.
 8. Click on a game in the log to view its stone placement order.
 
-## Features
+### Features
 
 - Play the Gomoku game with a variable board size (between 5x5 and 20x20).
 - User authentication system: Log in or register to start playing.
@@ -53,18 +61,13 @@ Access the app in your web browser at http://localhost:3000.
 - Game playback: Click on a game in the log to view the stones' placement order. This view is read-only and doesn't allow gameplay.
 - Navigation: Easily navigate back and forth between game pages.
 
-## Additional Features
+## Endpoints
 
-#### Statistics Overlay
-- An overlay that appears over the Games Log page.
-- The statistic button is located on the Games Log page.
-- View game statistics, such as total games played, wins, draws, and average moves per game.
-- This implementation can be found in the statisticOverlay directory inside the components directory.
-
-#### Hashed Passwords
-- In order to enhance security, passwords are stored as hashed values along with salts in local storage.
-- This approach improves security by comparing hashed password values rather than directly comparing plain text passwords.
-- This implementation can be found in the userProvider directory inside the components directory.
-
-#### Highlight Winning Stones
-- When a player wins, the line of stones forming the winning configuration will be highlighted to provide a clear visual indicator.
+| Method    | Endpoint          | Parameter     | Description                   | Response          |
+| ---       | ---               | ---           | ---                           | ---               |
+| POST      | /auth/login       | RequestBody   | Logs in a existing user       | {user, token}     |
+| POST      | /auth/register    | RequestBody   | Registers a new user          | {user, token}     |
+| GET       | /games/           | -             | Retrieves a list of all games | List<Game>        |
+| GET       | /games/:id        | game id       | Retrieve a single game        | Game              |
+| POST      | /games/           | RequestBody   | Create a new game             | Game              |
+| PUT       | /games/:id        | game id       | Update game data              | Game              |
