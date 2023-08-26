@@ -38,3 +38,9 @@ export enum GAME_STATUS {
     TURN_WHITE = "Player turn: WHITE",
     TURN_BLACK = "Player turn: BLACK"
 }
+
+/**
+ * Represents the base URL for the API.
+ * If REACT_APP_API_HOST environment variable is set, it uses that value, otherwise an empty string.
+ */
+export const API_HOST = process.env.REACT_APP_API_HOST ?? ''

@@ -2,13 +2,14 @@
  * @author Krisna Gusti (kgusti@myune.edu.au)
  */
 
-import bcrypt from 'bcryptjs';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { User } from '../../types';
+import { User, UserCredential } from '../../types';
 import { UserContext } from '../../context';
 import { useLocalStorage } from '../../hooks';
-import createDefaultAdmin from '../../utility/DefaultAdmin';
+import { setToken, post } from '../../utility';
+import { API_HOST } from '../../constants';
+
 
 /**
  * The UserProviderProps interface specifies the type of the props expected by the UserProvider component.
@@ -23,17 +24,10 @@ type UserProviderProps = {
  * @returns Returns the UserProvider component.
  */
 export default function UserProvider({ children }: UserProviderProps) {
-    const [users, setUsers] = useLocalStorage<User[]>('users', []);
-    const [user, setUser] = useState<User | undefined>(() => {
-        // Retrieve the user from local storage on initial mount
-        const storedUser = window.localStorage.getItem('loggedInUser');
-        return storedUser ? JSON.parse(storedUser) : undefined;
-    });
-    
-    // Create the default admin user if it doesn't exist when the component mounts.
-    useEffect(() => {
-        createDefaultAdmin(users, setUsers);
-    }, [users, setUsers]);
+    const [user, setUser] = useLocalStorage<User | undefined>('user', undefined)
+    if (user) {
+        setToken(user.token)
+    }
 
     // Store the 'user' information in local storage to persist the login status across page refreshes.
     useEffect(() => {
@@ -52,16 +46,17 @@ export default function UserProvider({ children }: UserProviderProps) {
      */
     const login = async (username: string, password: string) => {
         try {
-            const foundUser = users.find(
-                (u) => u.username === username && verifyPassword(password, u.password)
-            );
-            if (foundUser) {
-                setUser(foundUser);
-                return true;
-            } else {
-                return 'Invalid username or password';
-            }
+            const user = await post<UserCredential, User>(`${API_HOST}/auth/login`, {
+                username,
+                password
+            });
+            setUser(user);
+            setToken(user.token);
+            return true;
         } catch (error) {
+            if (error instanceof Error) {
+                return error.message;
+            }
             return 'Unable to login at this moment, please try again';
         }
     };
@@ -74,27 +69,17 @@ export default function UserProvider({ children }: UserProviderProps) {
      */
     const register = async (username: string, password: string) => {
         try {
-            // Check if the username already exists
-            if (users.some((u) => u.username === username)) {
-                return 'Username already exists';
-            }
-
-            // Generate a random salt for the user
-            const salt = bcrypt.genSaltSync(10);
-
-            // Hash the password with the salt
-            const hashedPassword = bcrypt.hashSync(password, salt);
-
-            const newUser: User = {
-                username: username,
-                password: hashedPassword,
-            };
-
-            // Save the new user to the users array
-            setUsers([...users, newUser]);
-            setUser(newUser);
+            const user = await post<UserCredential, User>(`${API_HOST}/auth/register`, {
+                username,
+                password
+            });
+            setUser(user);
+            setToken(user.token);
             return true;
         } catch (error) {
+            if (error instanceof Error) {
+                return error.message;
+            }
             return 'Unable to register at this moment, please try again';
         }
     };
@@ -103,17 +88,8 @@ export default function UserProvider({ children }: UserProviderProps) {
      * Handles user logout. Clears the current user state, effectively logging the user out.
      */
     const logout = () => {
-        setUser(undefined); // Use setUser to clear the user state
-    };
-
-    /**
-     * Verify the provided password against the hashed password using bcrypt.
-     * @param password The password provided by the user during login.
-     * @param hashedPassword The hashed password retrieved from the stored user data.
-     * @returns Returns true if the password is verified, or false otherwise.
-     */
-    const verifyPassword = (password: string, hashedPassword: string) => {
-        return bcrypt.compareSync(password, hashedPassword);
+        setUser(undefined);
+        setToken('');
     };
 
     return (
