@@ -42,9 +42,9 @@ authHandler.post(
 
             // Return new user with token
             return res.status(200).json({ _id: newUser._id, token })
-        } catch (err) {
-            console.log(err)
-            return res.status(500).send(err)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send(error)
         }
     }
 )
@@ -71,8 +71,8 @@ authHandler.post(
                 return res.status(200).json({ _id: user._id, token })
             }
             return res.status(400).send('Invalid Credentials')
-        } catch (err) {
-            return res.status(500).send(err)
+        } catch (error) {
+            return res.status(500).send(error)
         }
     }
 )
