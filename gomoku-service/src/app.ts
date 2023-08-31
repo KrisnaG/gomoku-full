@@ -27,6 +27,7 @@ import cors from 'cors'
 
 import connectDB from './util/connectDB';
 import authHandler from './handler/auth.handler';
+import gameHandler from './handler/game.handler';
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use(
 app.use(express.json());
 
 app.use('/auth', authHandler);
+app.use('/games', gameHandler)
 
 // only listen to request when DB connection is established
 mongoose.connection.once('connected', () => {
