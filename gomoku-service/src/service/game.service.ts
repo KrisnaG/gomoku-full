@@ -6,10 +6,16 @@ import GameModel, { GameDocument } from '../model/game.model';
 
 /**
  * Retrieve a list of played games.
- * @returns {Promise<GameDocument[]>} A promise that resolves to an array of game documents.
+ * @returns {Promise<>[]} An array of simplified game information.
  */
 export async function getAllGames() {
-    return GameModel.find().lean();
+    return (await GameModel.find().lean()).map(game => {
+        return {
+            '_id': game._id,
+            'status': game.status,
+            'date': game.date
+        }
+    });
 }
 
 /**
@@ -28,4 +34,18 @@ export async function getGameById(id: string) {
  */
 export async function createGame(gameData: GameDocument) {
     return GameModel.create(gameData);
+}
+
+/**
+ * Update a game with new information.
+ * @param {string} gameId - The ID of the game to be updated.
+ * @param {GameDocument} game - The updated game information.
+ * @returns {Promise<GameDocument | null>} The updated game or null if not found.
+ */
+export async function updateGame(gameId: string, game: GameDocument) {
+    return GameModel.findByIdAndUpdate(
+        { _id: gameId },
+        game,
+        { new: true }
+    )
 }
