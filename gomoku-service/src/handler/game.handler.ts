@@ -63,7 +63,7 @@ gameHandler.post(
             const emptyGame = createEmptyGame(size, date, userId);
             const newGame = await createGame(emptyGame);
 
-            return res.status(200).send(newGame);
+            return res.status(200).send(newGame._id);
         } catch (error) {
             res.status(500).send('Internal server error');
         }
