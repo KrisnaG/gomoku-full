@@ -43,4 +43,4 @@ export enum GAME_STATUS {
  * Represents the base URL for the API.
  * If REACT_APP_API_HOST environment variable is set, it uses that value, otherwise an empty string.
  */
-export const API_HOST = process.env.REACT_APP_API_HOST ?? ''
+export const API_HOST = process.env.REACT_APP_API_HOST ?? 'http://localhost:8080'

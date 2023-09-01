@@ -3,4 +3,3 @@
  */
 
 export * from './http';
-export * from './GameMechanics';

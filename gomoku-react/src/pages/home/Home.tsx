@@ -5,8 +5,9 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '../../constants';
+import { API_HOST, MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '../../constants';
 import { Button } from '../../components';
+import { post } from '../../utility';
 
 import style from './Home.module.css';
 
@@ -37,8 +38,9 @@ export default function Home() {
 
 
     // Event handler to start the game and pass the board size
-    const handleStartGame = () => {
-        navigate('/game', { state: { boardSize: boardSize } });
+    const handleStartGame = async () => {
+        const gameId: string = await post(`${API_HOST}/games`, { boardSize });
+        navigate('/game', { state: { gameId: gameId } });
     };
 
     return (

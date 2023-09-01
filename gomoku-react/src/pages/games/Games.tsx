@@ -5,7 +5,6 @@
 import { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
-import { useLocalStorage } from "../../hooks";
 import { UserContext } from '../../context';
 import { Message, StatisticsOverlay } from "../../components";
 import { GameData } from "../../types";
@@ -17,7 +16,6 @@ import Button from "../../components/button/Button";
  * Represents a list of all the games played.
  */
 export default function Games() {
-    const [ games, ] = useLocalStorage<GameData[]>('games', []);
     const navigate = useNavigate();
     const [ isOpen, setIsOpen ] = useState(false);
     

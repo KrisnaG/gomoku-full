@@ -2,104 +2,83 @@
  * @author Krisna Gusti (kgusti@myune.edu.au)
  */
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
 
 import UserContext from '../../context/UserContext';
-import { useLocalStorage } from "../../hooks";
 import { Board, Message } from "../../components";
-import { GAME_STATUS, STONE } from "../../constants";
-import { TileData, GameData } from "../../types";
-import { findWinningCoordinates } from "../../utility";
+import { API_HOST, GAME_STATUS } from "../../constants";
+import { get, put } from "../../utility";
+import Button from "../../components/button/Button";
 
 import style from './Game.module.css';
-import Button from "../../components/button/Button";
+import { GameData } from "../../types";
 
 /**
  * Represents a Gomoku game and game play logic
  */
 export default function Game() {
-    /**
-     * Initialise the game board with empty tiles.
-     * @returns Empty game board.
-     */
-    const getInitialBoard = (): TileData[][] => {
-        return Array.from({ length: boardSize }, () => 
-            new Array(boardSize).fill({ stone: STONE.EMPTY, order: null }));
-    }
-    
-    // Get the board size from the location state
+    // Get the gameId from the location state
     const location = useLocation();
-    const { boardSize } = location.state;
-
-    // Retrieve and manage games data using local storage
-    const [games, setGames] = useLocalStorage<GameData[]>('games', []);
+    const { gameId } = location.state;
 
     // Set up the game state
-    const [ board, setBoard ] = useState(getInitialBoard());
-    const [ gameStatus, setGameStatus ] = useState(GAME_STATUS.TURN_BLACK);
-    const [ totalStonesPlaced, setTotalStonesPlaced ] = useState(1);
+    const [ game, setGame ] = useState<GameData>()
     const [ gameOver, setGameOver ] = useState(false);
     const navigate = useNavigate();
+
+    /**
+     * 
+     * @param gameId 
+     */
+    const fetchGameDetails = async (gameId: string) => {
+        const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
+        setGame(game);
+    }
+
+    /**
+     * 
+     */
+    useEffect(() => {
+        fetchGameDetails(gameId)
+    }, [gameId])
 
     // Get the logged-in user from context
     const { user } = useContext(UserContext);
     
     // If user is not logged in, redirect to login
-    if (!user) return <Navigate to="/login" />
-
-    /**
-     * Updates the game board with the winning coordinates and the appropriate win state.
-     * @param winner The player who won.
-     * @param winningCoordinates The list of coordinates that indicate the winning configuration.
-     */
-    const setWinningBoard = (winner: STONE, winningCoordinates: [number, number][]) => {
-        const winnerState = winner === STONE.BLACK ? STONE.BLACK_WIN : STONE.WHITE_WIN;
-        const newBoard = [...board];
-            for (const [row, col] of winningCoordinates) {
-                newBoard[row][col] = { stone: winnerState, order: newBoard[row][col].order }
-        }
-        setBoard(newBoard);
+    if (!user) {
+        return <Navigate to="/login" />
+    } else if (!game) {
+        return null
     }
-    
+
     /**
      * Handle a tile click event.
      * @param {number} row - The row index of the clicked tile.
      * @param {number} col - The column index of the clicked tile.
      */
-    const handleTileClick = (row: number, col: number) => {
+    const handleTileClick = async (row: number, col: number) => {
         if (gameOver) return;
 
-        const currentPlayer = gameStatus === GAME_STATUS.TURN_BLACK ? STONE.BLACK : STONE.WHITE;
-        const newBoard = [...board];
-        newBoard[row][col] = { stone: currentPlayer, order: totalStonesPlaced };
-        setBoard(newBoard);
+        const result: GAME_STATUS = await put(`${API_HOST}/games`, {
+            gameId,
+            row,
+            col
+        });
 
-        const winningCoordinates = findWinningCoordinates(row, col, currentPlayer, board);
-        
         // Check for a winner or draw
-        if (winningCoordinates.length > 0) {
-            setGameStatus(currentPlayer === STONE.BLACK ? GAME_STATUS.WINNER_BLACK : GAME_STATUS.WINNER_WHITE);
-            setWinningBoard(currentPlayer, winningCoordinates);
+        if (result === GAME_STATUS.WINNER_BLACK || result === GAME_STATUS.WINNER_WHITE || result === GAME_STATUS.DRAW) {
             setGameOver(true);
-        } else if (totalStonesPlaced === boardSize * boardSize) {
-            setGameStatus(GAME_STATUS.DRAW);
-            setGameOver(true);
-        } else {
-            setGameStatus(gameStatus === GAME_STATUS.TURN_BLACK ? GAME_STATUS.TURN_WHITE : GAME_STATUS.TURN_BLACK);
-            setTotalStonesPlaced(totalStonesPlaced  + 1);
         }
+
+        await fetchGameDetails(gameId);
     };
 
     /**
      * Restart the game with a empty board.
      */
     const restartGame = () => {
-        setBoard(getInitialBoard());
-        setGameStatus(GAME_STATUS.TURN_BLACK);
-        setTotalStonesPlaced(1);
-        setGameOver(false);
     }
 
     /**
@@ -107,16 +86,6 @@ export default function Game() {
      */
     const leaveGame = () => {
         if (gameOver) {
-            setGames([
-                ...games, 
-                { 
-                    size: boardSize, 
-                    date: new Date().toString(), 
-                    winner: getPlayer(), 
-                    totalMoves: totalStonesPlaced, 
-                    board: board, 
-                    id: uuidv4() }
-            ]);
             navigate('/games');
         } else {
             navigate('/');
@@ -127,18 +96,18 @@ export default function Game() {
      * Gets the current player based on the game status.
      */
     const getPlayer = () => {
-        const words = gameStatus.split(' ');
+        const words = game.status.split(' ') ;
         return words[words.length - 1].toLocaleLowerCase(); 
     }
 
     return (
         <div className={ style.container }>
-            <Message variant={ getPlayer() } message={ gameStatus } />
+            <Message variant={ getPlayer() } message={ game.status } />
             <Board 
-                boardSize={ boardSize } 
-                board={ board } 
+                boardSize={ game.size } 
+                board={ game.board } 
                 onTileClick={ handleTileClick } 
-                readOnly={ gameOver }
+                readOnly={ game.readOnly }
             />
             <div className={ style.buttonGroup }>
                 <Button text='Restart' buttonStyle='general' onClick={ restartGame } />
