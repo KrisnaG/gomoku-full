@@ -10,8 +10,9 @@ import { TileData } from "./TileData"
 export type GameData = {
     size: number
     date: string
-    winner: string
+    status: string
     board: TileData[][]
     totalMoves: number
-    id: string
+    readOnly: boolean
+    gameId: string
 }

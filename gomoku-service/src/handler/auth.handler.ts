@@ -4,6 +4,7 @@
 
 import express, { Request, Response } from 'express'
 import bcrypt from 'bcryptjs'
+
 import validateSchema from '../middleware/validateSchema'
 import { createUser, getUserByUsername } from '../service/auth.service'
 import { LoginInput, RegisterInput, registerSchema } from '../schema/auth.schema'

@@ -2,13 +2,14 @@
  * @author Krisna Gusti (kgusti@myune.edu.au)
  */
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
-import { useLocalStorage } from '../../hooks';
 import { GameData } from '../../types';
 import { UserContext } from '../../context';
 import { Board, Message, Button } from '../../components';
+import { get } from '../../utility';
+import { API_HOST } from '../../constants';
 
 import style from './GameLog.module.css'
 
@@ -18,19 +19,32 @@ import style from './GameLog.module.css'
 export default function GameLog() {
     // Extract 'id' from route parameters
     const { id } = useParams<{ id?: string }>();
+    const [ game, setGame ] = useState<GameData>();
 
     const navigate = useNavigate();
-
-    // Retrieve and manage games data using local storage
-    const [ games ] = useLocalStorage<GameData[]>('games', []);
+    
+    /**
+     * Fetches game details from the server based on the provided gameId.
+     * @param gameId - The unique identifier of the game to fetch.
+     */
+    const fetchGameDetails = async (gameId: string) => {
+        const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
+        setGame(game);
+    }
+    
+    // Fetch game details when the 'id' dependency changes.
+    useEffect(() => {
+        if (id) {
+            fetchGameDetails(id)
+        }
+    }, [id]);
 
     // Get user information and handle unauthorised access
     const { user } = useContext(UserContext);
     if (!user) return <Navigate to="/login" />
 
-    // Find the game corresponding to the provided 'id'
-    const game = games.find((game) => game.id === id);
     
+
     // If the game is not found, display a warning message
     if (!game) {
         return <Message variant='warning' message='Unable to find game!' />
@@ -40,16 +54,16 @@ export default function GameLog() {
      * Get the results for the game.
      */
     const getGameResult = () => {
-        if (game.winner === 'draw') {
+        if (game.status === 'draw') {
             return `The game was a draw!`;
         } else {
-            return `The winner was ${game.winner}!`
+            return `The winner was ${game.status}!`
         }
     }
     
     return (
         <div className={ style.container }>
-            <Message variant={ game.winner } message={ getGameResult() } />
+            <Message variant={ game.status } message={ getGameResult() } />
             <Board 
                 boardSize={ game.size } 
                 board={ game.board } 
