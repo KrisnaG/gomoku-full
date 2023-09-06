@@ -5,15 +5,15 @@
 import GameModel, { GameDocument } from '../model/game.model';
 
 /**
- * Retrieve a list of played games.
+ * Retrieve a list of played games with simplified game information.
  * @returns {Promise<>[]} An array of simplified game information.
  */
 export async function getAllGames() {
     return (await GameModel.find().lean()).map(game => {
         return {
-            '_id': game._id,
+            'gameId': game._id,
             'status': game.status,
-            'date': game.date
+            'date': game.createdAt
         }
     });
 }

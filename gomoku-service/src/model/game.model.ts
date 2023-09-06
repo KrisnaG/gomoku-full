@@ -19,11 +19,12 @@ export interface TileData {
  */
 export interface GameData {
     size: number;
-    date: string;
     status: GAME_STATUS;
     board: TileData[][];
     totalMoves: number;
     readOnly: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
 };
 
 /**
@@ -39,7 +40,6 @@ export interface GameDocument extends GameData, Document {
 const gameSchema = new mongoose.Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     size: { type: Number, required: true },
-    date: { type: String, required: true },
     status: { type: String, enum: Object.values(GAME_STATUS), required: true },
     board: [
         {
@@ -53,8 +53,8 @@ const gameSchema = new mongoose.Schema({
         }   
     ],
     totalMoves: { type: Number, required: true },
-    readonly: { type: Boolean, required: true }
-});
+    readOnly: { type: Boolean, default: false }
+}, { timestamps: true });
 
 /**
  * Mongoose model for the 'Game' collection, using the GameDocument interface.

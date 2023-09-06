@@ -10,9 +10,9 @@ import { Board, Message } from "../../components";
 import { API_HOST, GAME_STATUS } from "../../constants";
 import { get, put } from "../../utility";
 import Button from "../../components/button/Button";
+import { GameData } from "../../types";
 
 import style from './Game.module.css';
-import { GameData } from "../../types";
 
 /**
  * Represents a Gomoku game and game play logic
@@ -28,23 +28,21 @@ export default function Game() {
     const navigate = useNavigate();
 
     /**
-     * 
-     * @param gameId 
+     * Fetch game details by gameId and update the state.
+     * @param {string} gameId - The ID of the game to fetch.
      */
     const fetchGameDetails = async (gameId: string) => {
         const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
         setGame(game);
     }
 
-    /**
-     * 
-     */
+    // Fetch game details when the gameId changes
     useEffect(() => {
         fetchGameDetails(gameId)
     }, [gameId])
 
     // Get the logged-in user from context
-    const { user } = useContext(UserContext);
+    const { user, logout } = useContext(UserContext);
     
     // If user is not logged in, redirect to login
     if (!user) {
@@ -59,37 +57,60 @@ export default function Game() {
      * @param {number} col - The column index of the clicked tile.
      */
     const handleTileClick = async (row: number, col: number) => {
+        // Cannot modify a complete game
         if (gameOver) return;
 
-        const result: GAME_STATUS = await put(`${API_HOST}/games`, {
-            gameId,
-            row,
-            col
-        });
+        try {
+            // Put request
+            const response: GameData = await put(`${API_HOST}/games`, {
+                gameId: gameId,
+                x: row,
+                y: col
+            })
+            
+            const status = response.status
+            
+            // Check for a winner or draw
+            if (response.status === GAME_STATUS.WINNER_BLACK || status === GAME_STATUS.WINNER_WHITE || status === GAME_STATUS.DRAW) {
+                setGameOver(true);
+            }
 
-        // Check for a winner or draw
-        if (result === GAME_STATUS.WINNER_BLACK || result === GAME_STATUS.WINNER_WHITE || result === GAME_STATUS.DRAW) {
-            setGameOver(true);
+            // Update game board
+            await fetchGameDetails(gameId);
+        } catch (error) {
+            console.log((error as Error).message)
+            logout()
+            navigate('/')
         }
-
-        await fetchGameDetails(gameId);
     };
 
     /**
      * Restart the game with a empty board.
      */
-    const restartGame = () => {
+    const restartGame = async () => {
+        if (!window.confirm('The game is still in progress, are you sure to restart?'))
+            return
+
+        try {
+            await put(`${API_HOST}/games/restart`, {
+                gameId: gameId,
+            })
+            await fetchGameDetails(gameId);
+        } catch (error) {
+            console.log((error as Error).message)
+            logout()
+            navigate('/')
+        }
     }
 
     /**
-     * Leave the game and save it to the list of games if it's over.
+     * Leave the game and navigate to games log.
      */
     const leaveGame = () => {
-        if (gameOver) {
-            navigate('/games');
-        } else {
-            navigate('/');
-        }
+        if (!window.confirm('The game is still in progress, are you sure to leave?'))
+            return
+        
+        navigate('/games');
     }
 
     /**
@@ -110,7 +131,7 @@ export default function Game() {
                 readOnly={ game.readOnly }
             />
             <div className={ style.buttonGroup }>
-                <Button text='Restart' buttonStyle='general' onClick={ restartGame } />
+                { gameOver ? <div/> : <Button text='Restart' buttonStyle='general' onClick={ restartGame } />}
                 <Button text='Leave' buttonStyle='general' onClick={ leaveGame } />
             </div>
         </div>

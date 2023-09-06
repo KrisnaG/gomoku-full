@@ -5,15 +5,16 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 
-
 import validateSchema from '../middleware/validateSchema'
 import { getAllGames, getGameById, createGame, updateGame } from '../service/game.service';
-import { getGameByIdSchema, createGameSchema, updateGameSchema } from '../schema/game.schema'
-import { GameDocument, TileData, GameModelSchema } from '../model/game.model';
+import { getGameByIdSchema, createGameSchema, updateGameSchema, restartGameSchema } from '../schema/game.schema'
 import { GAME_STATUS, STONE } from '../constants';
-import { isPlayerWinner } from '../game';
+import { createEmptyGame, isPlayerWinner } from '../game';
+import { deserializeUser } from '../middleware/deserializeUser';
 
 const gameHandler = express.Router();
+
+gameHandler.use(deserializeUser)
 
 /**
  * Endpoint to retrieve a list of played games.
@@ -59,8 +60,8 @@ gameHandler.post(
     validateSchema(createGameSchema),
     async (req: Request, res: Response) => {
         try {
-            const { size, date, userId } = req.body;
-            const emptyGame = createEmptyGame(size, date, userId);
+            const { size } = req.body;
+            const emptyGame = createEmptyGame(size, req.userId);
             const newGame = await createGame(emptyGame);
 
             return res.status(200).send(newGame._id);
@@ -86,7 +87,7 @@ gameHandler.put(
             }
             
             const game = await getGameById(gameId);
-            
+
             if (!game) {
                 return res.status(404).send('Game not found');
             }
@@ -119,7 +120,7 @@ gameHandler.put(
 
             const newGame = await updateGame(gameId, game);
 
-            return res.status(200).send(newGame?.status);
+            return res.status(200).send({status: newGame?.status});
         } catch (error) {
             console.log(error)
             res.status(500).send('Internal server error');
@@ -129,36 +130,34 @@ gameHandler.put(
 
 
 /**
- * Create an empty game with the specified size, date, and user ID.
- * @param {number} size - The size of the game board.
- * @param {string} date - The date of the game creation.
- * @param {string} userId - The ID of the user associated with the game.
- * @returns {GameDocument} An empty game with the provided parameters.
+ * Endpoint to restart the current game.
+ * Validates the request body using restartGameSchema.
  */
-export function createEmptyGame(size: number, date: string, userId: string): GameDocument {
-    
-    const emptyGame: GameDocument = new GameModelSchema({
-        userId: userId,
-        size: size,
-        date: date,
-        status: GAME_STATUS.TURN_BLACK,
-        board: [],
-        totalMoves: 0,
-        readOnly: false
-    });
+gameHandler.put(
+    '/restart', 
+    validateSchema(restartGameSchema),
+    async (req: Request, res: Response) => {
+        try {
+            const { gameId } = req.body;
+            
+            if (!mongoose.Types.ObjectId.isValid(gameId)) {
+                return res.status(400).json({ error: 'Invalid game ID' });
+            }
+            
+            const game = await getGameById(gameId);
 
-    const emptyTileData: TileData = { stone: STONE.EMPTY, order: undefined }
-    
-    // Initialise the board with empty tiles
-    for (let i = 0; i < size; i++) {
-        const row: TileData[] = [];
-        for (let j = 0; j < size; j++) {
-            row.push(emptyTileData);
+            if (!game) {
+                return res.status(404).send('Game not found');
+            }
+
+            const newGame = await updateGame(gameId, createEmptyGame(game.size, req.userId, game));
+
+            return res.status(200).send({status: newGame?.status});
+        } catch (error) {
+            console.log(error)
+            res.status(500).send('Internal server error');
         }
-        emptyGame.board.push(row);
     }
-
-    return emptyGame;
-}
+);
 
 export default gameHandler;
