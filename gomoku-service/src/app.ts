@@ -1,26 +1,8 @@
-// import { createServer } from 'http'
-// import express, { Express } from 'express'
-// import cors from 'cors'
+/**
+ * The file is based on the material from lectures/tutorials by Yihan Lu and Le Kang.
+ */
 
-// import authHandler from './handler/auth.handler'
-
-// const app: Express = express()
-
-// app.use(
-//   cors({
-//     origin: process.env.allowHost ?? true,
-//   })
-// )
-
-// app.use(express.json())
-
-// app.use('/api/auth', authHandler)
-
-// export const server = createServer(app)
-
-// export default app
-
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors'
@@ -39,14 +21,16 @@ const port = process.env.PORT;
 
 app.use(
   cors({
-    origin: process.env.allowHost || true,
+    origin: process.env.allowHost ?? true,
   })
 )
+
+app.options('*', cors());
 
 app.use(express.json());
 
 app.use('/auth', authHandler);
-app.use('/games', gameHandler)
+app.use('/games', gameHandler);
 
 // only listen to request when DB connection is established
 mongoose.connection.once('connected', () => {

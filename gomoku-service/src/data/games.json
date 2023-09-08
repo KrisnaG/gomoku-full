@@ -1,0 +1,250 @@
+[
+  {
+    "_id": "64f854f367a64fc316acb8f1",
+    "userId": "62f88bd5e67347af189c4baa",
+    "size": 5,
+    "status": "Player turn: WHITE",
+    "board": [
+        [
+            {
+                "stone": "BLACK",
+                "order": 1,
+                "_id": "64f8554867a64fc316acb927"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8f3"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8f4"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8f5"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8f6"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8f7"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8f8"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8f9"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8fa"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8fb"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8fc"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8fd"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8fe"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb8ff"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb900"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb901"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb902"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb903"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb904"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb905"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb906"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb907"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb908"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb909"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f854f367a64fc316acb90a"
+            }
+        ]
+    ],
+    "totalMoves": 1,
+    "readOnly": false,
+    "createdAt": "2023-09-06T10:31:15.052Z",
+    "updatedAt": "2023-09-06T10:32:40.988Z",
+    "__v": 0
+  },
+  {
+    "_id": "64f855b767a64fc316acb95d",
+    "userId": "62f88bd5e67347af189c4baa",
+    "size": 5,
+    "status": "Player turn: BLACK",
+    "board": [
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb95e"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb95f"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb960"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb961"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb962"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb963"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb964"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb965"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb966"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb967"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb968"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb969"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb96a"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb96b"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb96c"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb96d"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb96e"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb96f"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb970"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb971"
+            }
+        ],
+        [
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb972"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb973"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb974"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb975"
+            },
+            {
+                "stone": "EMPTY",
+                "_id": "64f855b767a64fc316acb976"
+            }
+        ]
+    ],
+    "totalMoves": 0,
+    "readOnly": false,
+    "createdAt": "2023-09-06T10:34:31.961Z",
+    "updatedAt": "2023-09-06T10:34:31.961Z",
+    "__v": 0
+  }
+]
+

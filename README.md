@@ -26,7 +26,7 @@ npm install
 Start the application:
 
 ```bash
-npm start
+npm run start
 ```
 
 Access the app in your web browser at http://localhost:3000.
@@ -45,6 +45,12 @@ Install dependencies:
 npm install
 ```
 
+If this is the first time using this service you can run to initialise
+the database and set default values.
+```bash
+npm run bootstrapdb
+```
+
 #### Getting Started
 
 Start the application:
@@ -55,18 +61,44 @@ npm run dev
 
 Access the service can be interacted with at http://localhost:8080.
 
-#### Using Postman to interact with the service
+### Usage with Docker
+
+Navigate to the root directory which should contain the docker-compose.yml file.
+
+Run the following command to start the full stack:
+```bash
+docker-compose up -d
+``` 
+
+To stop the stack run the following command:
+```bash
+docker-compose down 
+```
+
+The front end Gomoku application can be access at: http://localhost:3000.
+
+The back end Gomoku service can be access at: http://localhost:8080.
+
+The back end mongodb via docker container can be access at: mongodb://localhost:27017.
+
+### Using Postman to interact with the service
 
 Import the following into Postman:
 ```
 https://api.postman.com/collections/29238041-4f69214d-fb4f-47d5-8225-f83d0518182e?access_key=PMAT-01H95GQ74PDH7QBHWYV2071NG7
 ```
 
+**Authorisation**:
+
+Login a user and and copy the token from the response. 
+In the Authroization tab, select the type Bearer Token and paste the copied token in the Token section.
+
 ### Pre-configured Username and Password
 
 A pre-configured user with username and password is generated. This profile does not contain any privileges over an ordinary user.
 
 **username**: admin
+
 **password**: admin
 
 ## Gomoku
@@ -76,24 +108,10 @@ A pre-configured user with username and password is generated. This profile does
 1. Log in or register to access the game.
 2. Choose a board size between 5x5 and 20x20.
 3. Players take turns placing white and black stones on the board.
-4. Restart the game at any time.
-5. After completing a game (win or draw), choose to leave to save the game in the log.
-6. Leaving during an ongoing game doesn't save progress.
-7. Visit the games log page to view saved games and statistics.
-8. Click on a game in the log to view its stone placement order.
-
-### Features
-
-- Play the Gomoku game with a variable board size (between 5x5 and 20x20).
-- User authentication system: Log in or register to start playing.
-- Default account: Use the "admin" username and password "admin" for login (no special privileges).
-- Alternating turns: Players take turns placing white and black stones on the board.
-- Restart option: Restart the game at any point during play.
-- Game completion: Once a game is completed (win or draw), you can choose to leave, and the game will be saved in the games log.
-- In-progress game: Leaving while a game is in progress doesn't save the game, and you return to the home page.
-- Games log: View a list of saved games in the games log page.
-- Game playback: Click on a game in the log to view the stones' placement order. This view is read-only and doesn't allow game play.
-- Navigation: Easily navigate back and forth between game pages.
+4. Restart the game at any time during play.
+5. After completing a game (win or draw) or during a game, you can choose to leave which will save the progress.
+6. Click on a game in the log to view its stone placement order.
+7. Clicking on a game in progress will return you to the game in progress.
 
 ## Endpoints
 
@@ -105,3 +123,4 @@ A pre-configured user with username and password is generated. This profile does
 | GET       | /games/:id        | Params(gameId)                    | Retrieve a single game        | Game              |
 | POST      | /games/           | RequestBody(size, date, userId)   | Create a new game             | Game              |
 | PUT       | /games/           | RequestBody(gameId, x, y)         | Update game data              | GameStatus        |
+| PUT       | /games/restart    | RequestBody(gameId)               | Update game data (restart)    | GameStatus        |

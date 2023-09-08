@@ -1,8 +1,14 @@
+/**
+ * The file is based on the material from lectures/tutorials by Yihan Lu and Le Kang.
+ */
+
 import 'dotenv/config'
 import connect from './connectDB'
 import bcrypt from 'bcryptjs'
 import UserModel from '../model/user.model'
 import users from '../data/user.json'
+import games from '../data/games.json'
+import GameModel from '../model/game.model'
 
 /**
  * Perform the database setup.
@@ -19,6 +25,10 @@ const run = async () => {
         // Users
         await UserModel.deleteMany()
         await UserModel.insertMany(users)
+
+        // Games
+        await GameModel.deleteMany()
+        await GameModel.insertMany(games)
 
         process.exit(0)
     } catch (err) {
