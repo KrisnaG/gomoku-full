@@ -2,20 +2,28 @@
  * @author Krisna Gusti (kgusti@myune.edu.au)
  */
 
+import mongoose from 'mongoose';
 import GameModel, { GameDocument } from '../model/game.model';
 
 /**
- * Retrieve a list of played games with simplified game information.
+ * Retrieve a list of played games associated to user with simplified game information.
  * @returns {Promise<>[]} An array of simplified game information.
  */
-export async function getAllGames() {
-    return (await GameModel.find().lean()).map(game => {
-        return {
-            'gameId': game._id,
-            'status': game.status,
-            'date': game.createdAt
+export async function getAllGames(userId: string) {
+    return GameModel.aggregate([
+        {
+            $match: { 
+                userId: new mongoose.Types.ObjectId(userId) 
+            }
+        },
+        {
+            $project: {
+                gameId: "$_id",
+                status: 1,
+                date: "$createdAt"
+            }
         }
-    });
+    ]);
 }
 
 /**
