@@ -19,28 +19,32 @@ import style from './Game.module.css';
  */
 export default function Game() {
     // Get the gameId from the location state
-    const location = useLocation();
-    const { gameId } = location.state;
-
+    const location = useLocation();   
+    const { gameId } = location.state || "";
+    
     // Set up the game state
-    const [ game, setGame ] = useState<GameData>()
+    const [ game, setGame ] = useState<GameData>();
     const [ gameOver, setGameOver ] = useState(false);
     const navigate = useNavigate();
-
+    
     /**
      * Fetch game details by gameId and update the state.
      * @param {string} gameId - The ID of the game to fetch.
-     */
-    const fetchGameDetails = async (gameId: string) => {
-        const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
-        setGame(game);
+    */
+   const fetchGameDetails = async (gameId: string) => {
+        try {
+            const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
+            setGame(game);
+        } catch (error) {
+            console.log((error as Error).message);
+        }
     }
-
-    // Fetch game details when the gameId changes
+    
+    // Fetch game details on mount
     useEffect(() => {
         fetchGameDetails(gameId)
-    }, [gameId])
-
+    }, [])
+    
     // Get the logged-in user from context
     const { user, logout } = useContext(UserContext);
     
@@ -50,7 +54,7 @@ export default function Game() {
     } else if (!game) {
         return null
     }
-
+    
     /**
      * Handle a tile click event.
      * @param {number} row - The row index of the clicked tile.
@@ -107,8 +111,9 @@ export default function Game() {
      * Leave the game and navigate to games log.
      */
     const leaveGame = () => {
-        if (!window.confirm('The game is still in progress, are you sure to leave?'))
-            return
+        if (!gameOver)
+            if (!window.confirm('The game is still in progress, are you sure to leave?'))
+                return
         
         navigate('/games');
     }

@@ -17,11 +17,12 @@ const gameHandler = express.Router();
 gameHandler.use(deserializeUser)
 
 /**
- * Endpoint to retrieve a list of played games.
+ * Endpoint to retrieve a list of played games for a user.
  */
 gameHandler.get('/', async (req: Request, res: Response) => {
     try {
-        const games = await getAllGames();
+        const userId = req.userId;
+        const games = await getAllGames(userId);
         return res.status(200).send(games);
     } catch (error) {
         res.status(500).send(error);
@@ -38,11 +39,13 @@ gameHandler.get(
     async (req: Request, res: Response) => {
         try {
             const gameId = req.params.gameId
+            const userId = req.userId;
             if (!mongoose.Types.ObjectId.isValid(gameId)) {
                 return res.status(400).json({ error: 'Invalid game ID' });
             }
             const game = await getGameById(gameId);
-            if (!game) {
+
+            if (!game?.userId.equals(userId)) {
                 return res.status(404).send('Game not found');
             }
             return res.status(200).send(game);
@@ -81,6 +84,7 @@ gameHandler.put(
     async (req: Request, res: Response) => {
         try {
             const { gameId, x, y } = req.body;
+            const userId = req.userId;
             
             if (!mongoose.Types.ObjectId.isValid(gameId)) {
                 return res.status(400).json({ error: 'Invalid game ID' });
@@ -88,7 +92,7 @@ gameHandler.put(
             
             const game = await getGameById(gameId);
 
-            if (!game) {
+            if (!game?.userId.equals(userId)) {
                 return res.status(404).send('Game not found');
             }
             
@@ -139,14 +143,15 @@ gameHandler.put(
     async (req: Request, res: Response) => {
         try {
             const { gameId } = req.body;
-            
+            const userId = req.userId;
+
             if (!mongoose.Types.ObjectId.isValid(gameId)) {
                 return res.status(400).json({ error: 'Invalid game ID' });
             }
             
             const game = await getGameById(gameId);
 
-            if (!game) {
+            if (!game?.userId.equals(userId)) {
                 return res.status(404).send('Game not found');
             }
 

@@ -28,8 +28,13 @@ export default function GameLog() {
      * @param gameId - The unique identifier of the game to fetch.
      */
     const fetchGameDetails = async (gameId: string) => {
-        const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
-        setGame(game);
+        try {
+            const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
+            setGame(game);
+        } catch (error) {
+            console.log((error as Error).message);
+            navigate('/');
+        }
     }
     
     // Fetch game details when the 'id' dependency changes.

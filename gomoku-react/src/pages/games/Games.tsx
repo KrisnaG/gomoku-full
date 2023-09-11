@@ -21,27 +21,31 @@ export default function Games() {
     const navigate = useNavigate();
     const [ games, setGames ] = useState<GameData[]>();
 
+    // Get the logged-in user from context
+    const { user } = useContext(UserContext);
+
     /**
      * Fetches all game details from the server.
      */
     const fetchAllGameDetails = async () => {
-        const allGames: GameData[] = await get<GameData[]>(`${API_HOST}/games/`);
-        setGames(allGames);
+        try {
+            const allGames: GameData[] = await get<GameData[]>(`${API_HOST}/games/`);
+            setGames(allGames);
+        } catch (error) {
+            console.log((error as Error).message);
+        }
     }
 
     // Fetches all game details when the component mounts.
     useEffect(() => {
         fetchAllGameDetails()
-    }, [])
-
-    // Get the logged-in user from context
-    const { user } = useContext(UserContext);
+    }, []);
 
     // If user is not logged in, redirect to login
     if (!user) {
-        return <Navigate to="/login" />
+        return <Navigate to="/login" />;
     } else if (!games) {
-        return null
+        return null;
     }
 
     /**

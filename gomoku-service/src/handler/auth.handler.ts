@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs'
 
 import validateSchema from '../middleware/validateSchema'
 import { createUser, getUserByUsername } from '../service/auth.service'
-import { LoginInput, RegisterInput, registerSchema } from '../schema/auth.schema'
+import { LoginInput, RegisterInput, loginSchema, registerSchema } from '../schema/auth.schema'
 import { signJwt } from '../util/jwt'
 
 const authHandler = express.Router()
@@ -55,6 +55,7 @@ authHandler.post(
  */
 authHandler.post(
     '/login',
+    validateSchema(loginSchema),
     async (req: Request<{}, {}, LoginInput['body']>, res: Response) => {
         try {
             // Get user input
