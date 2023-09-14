@@ -19,6 +19,7 @@ import style from './Games.module.css'
  */
 export default function Games() {
     const navigate = useNavigate();
+    const [ error, setError ] = useState('');
     const [ games, setGames ] = useState<GameData[]>();
 
     // Get the logged-in user from context
@@ -31,8 +32,9 @@ export default function Games() {
         try {
             const allGames: GameData[] = await get<GameData[]>(`${API_HOST}/games/`);
             setGames(allGames);
+            setError('');
         } catch (error) {
-            console.log((error as Error).message);
+            setError((error as Error).message);
         }
     }
 
@@ -44,8 +46,15 @@ export default function Games() {
     // If user is not logged in, redirect to login
     if (!user) {
         return <Navigate to="/login" />;
-    } else if (!games) {
-        return null;
+    }
+
+    // Games is still fetching
+    if (!games) {
+        if (error === '') {
+            return <Message variant='info' message='Fetching Games ...'/>
+        } else {
+            return <Message variant='error' message={ error }/>
+        }
     }
 
     /**

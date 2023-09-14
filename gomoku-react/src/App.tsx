@@ -2,7 +2,7 @@
  * @author Krisna Gusti (kgusti@myune.edu.au)
  */
 
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { Header, UserProvider } from './components';
 import { Home, Login, Register, Game, Games, GameLog } from './pages';
@@ -25,6 +25,7 @@ function App() {
                         <Route path="/game" element={ <Game /> } />
                         <Route path="/games" element={ <Games /> } />
                         <Route path="/game-log/:id" element={ <GameLog /> } />
+                        <Route path="*" element={ <Navigate to="/" replace /> } />
                     </Routes>
                 </div>
             </main>
