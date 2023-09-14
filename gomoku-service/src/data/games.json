@@ -120,131 +120,285 @@
     "totalMoves": 1,
     "readOnly": false,
     "createdAt": "2023-09-06T10:31:15.052Z",
-    "updatedAt": "2023-09-06T10:32:40.988Z",
-    "__v": 0
+    "updatedAt": "2023-09-06T10:32:40.988Z"
   },
   {
-    "_id": "64f855b767a64fc316acb95d",
+    "_id": "6502bede9e6ef23ecd2e194a",
     "userId": "62f88bd5e67347af189c4baa",
     "size": 5,
-    "status": "Player turn: BLACK",
+    "status": "Winner: BLACK",
     "board": [
-        [
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb95e"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb95f"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb960"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb961"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb962"
-            }
-        ],
-        [
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb963"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb964"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb965"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb966"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb967"
-            }
-        ],
-        [
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb968"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb969"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb96a"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb96b"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb96c"
-            }
-        ],
-        [
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb96d"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb96e"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb96f"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb970"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb971"
-            }
-        ],
-        [
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb972"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb973"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb974"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb975"
-            },
-            {
-                "stone": "EMPTY",
-                "_id": "64f855b767a64fc316acb976"
-            }
-        ]
+      [
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e194b"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e194c"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e194d"
+        },
+        {
+          "stone": "WHITE",
+          "order": 2,
+          "_id": "6502beee9e6ef23ecd2e19be"
+        },
+        {
+          "stone": "BLACK",
+          "order": 1,
+          "_id": "6502beeb9e6ef23ecd2e1988"
+        }
+      ],
+      [
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1950"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1951"
+        },
+        {
+          "stone": "WHITE",
+          "order": 4,
+          "_id": "6502bf019e6ef23ecd2e1a50"
+        },
+        {
+          "stone": "BLACK",
+          "order": 3,
+          "_id": "6502bf009e6ef23ecd2e1a1a"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1954"
+        }
+      ],
+      [
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1955"
+        },
+        {
+          "stone": "WHITE",
+          "order": 6,
+          "_id": "6502bf029e6ef23ecd2e1ac2"
+        },
+        {
+          "stone": "BLACK",
+          "order": 5,
+          "_id": "6502bf019e6ef23ecd2e1a8c"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1958"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1959"
+        }
+      ],
+      [
+        {
+          "stone": "WHITE",
+          "order": 8,
+          "_id": "6502bf039e6ef23ecd2e1b34"
+        },
+        {
+          "stone": "BLACK",
+          "order": 7,
+          "_id": "6502bf029e6ef23ecd2e1afe"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e195c"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e195d"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e195e"
+        }
+      ],
+      [
+        {
+          "stone": "BLACK",
+          "order": 9,
+          "_id": "6502bf049e6ef23ecd2e1b70"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1960"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1961"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1962"
+        },
+        {
+          "stone": "EMPTY",
+          "_id": "6502bede9e6ef23ecd2e1963"
+        }
+      ]
     ],
-    "totalMoves": 0,
-    "readOnly": false,
-    "createdAt": "2023-09-06T10:34:31.961Z",
-    "updatedAt": "2023-09-06T10:34:31.961Z",
-    "__v": 0
+    "totalMoves": 9,
+    "readOnly": true,
+    "createdAt": "2023-09-14T08:05:50.135Z",
+    "updatedAt": "2023-09-14T08:06:28.248Z"
+  },
+  {
+    "_id": "6502c312b50b9205ad893078",
+    "userId": "62f88bd5e67347af189c4baa",
+    "size": 5,
+    "status": "Game is a draw",
+    "board": [
+      [
+        {
+          "stone": "BLACK",
+          "order": 5,
+          "_id": "6502c316b50b9205ad89318b"
+        },
+        {
+          "stone": "WHITE",
+          "order": 4,
+          "_id": "6502c315b50b9205ad893155"
+        },
+        {
+          "stone": "BLACK",
+          "order": 3,
+          "_id": "6502c315b50b9205ad893120"
+        },
+        {
+          "stone": "WHITE",
+          "order": 2,
+          "_id": "6502c314b50b9205ad8930e9"
+        },
+        {
+          "stone": "BLACK",
+          "order": 1,
+          "_id": "6502c314b50b9205ad8930b4"
+        }
+      ],
+      [
+        {
+          "stone": "BLACK",
+          "order": 21,
+          "_id": "6502c324b50b9205ad893501"
+        },
+        {
+          "stone": "WHITE",
+          "order": 22,
+          "_id": "6502c324b50b9205ad893539"
+        },
+        {
+          "stone": "BLACK",
+          "order": 23,
+          "_id": "6502c325b50b9205ad893571"
+        },
+        {
+          "stone": "WHITE",
+          "order": 24,
+          "_id": "6502c325b50b9205ad8935a9"
+        },
+        {
+          "stone": "BLACK",
+          "order": 25,
+          "_id": "6502c326b50b9205ad8935df"
+        }
+      ],
+      [
+        {
+          "stone": "WHITE",
+          "order": 6,
+          "_id": "6502c316b50b9205ad8931cd"
+        },
+        {
+          "stone": "BLACK",
+          "order": 7,
+          "_id": "6502c317b50b9205ad893205"
+        },
+        {
+          "stone": "WHITE",
+          "order": 8,
+          "_id": "6502c317b50b9205ad89323d"
+        },
+        {
+          "stone": "BLACK",
+          "order": 9,
+          "_id": "6502c319b50b9205ad893275"
+        },
+        {
+          "stone": "WHITE",
+          "order": 10,
+          "_id": "6502c319b50b9205ad8932ad"
+        }
+      ],
+      [
+        {
+          "stone": "BLACK",
+          "order": 19,
+          "_id": "6502c321b50b9205ad89349c"
+        },
+        {
+          "stone": "WHITE",
+          "order": 20,
+          "_id": "6502c322b50b9205ad8934d3"
+        },
+        {
+          "stone": "WHITE",
+          "order": 18,
+          "_id": "6502c321b50b9205ad893465"
+        },
+        {
+          "stone": "BLACK",
+          "order": 17,
+          "_id": "6502c320b50b9205ad893430"
+        },
+        {
+          "stone": "WHITE",
+          "order": 16,
+          "_id": "6502c320b50b9205ad8933fc"
+        }
+      ],
+      [
+        {
+          "stone": "BLACK",
+          "order": 15,
+          "_id": "6502c31bb50b9205ad8933c5"
+        },
+        {
+          "stone": "WHITE",
+          "order": 14,
+          "_id": "6502c31bb50b9205ad893390"
+        },
+        {
+          "stone": "BLACK",
+          "order": 13,
+          "_id": "6502c31bb50b9205ad893359"
+        },
+        {
+          "stone": "WHITE",
+          "order": 12,
+          "_id": "6502c31ab50b9205ad893323"
+        },
+        {
+          "stone": "BLACK",
+          "order": 11,
+          "_id": "6502c31ab50b9205ad8932ee"
+        }
+      ]
+    ],
+    "totalMoves": 25,
+    "readOnly": true,
+    "createdAt": "2023-09-14T08:23:46.187Z",
+    "updatedAt": "2023-09-14T08:24:06.001Z"
   }
 ]
 

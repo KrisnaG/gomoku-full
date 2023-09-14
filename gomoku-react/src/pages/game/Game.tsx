@@ -26,6 +26,7 @@ export default function Game() {
     const [ game, setGame ] = useState<GameData>();
     const [ gameOver, setGameOver ] = useState(false);
     const navigate = useNavigate();
+    const [ error, setError ] = useState('');
     
     /**
      * Fetch game details by gameId and update the state.
@@ -35,8 +36,9 @@ export default function Game() {
         try {
             const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
             setGame(game);
+            setError('');
         } catch (error) {
-            console.log((error as Error).message);
+            setError((error as Error).message);
         }
     }
     
@@ -51,8 +53,15 @@ export default function Game() {
     // If user is not logged in, redirect to login
     if (!user) {
         return <Navigate to="/login" />
-    } else if (!game) {
-        return null
+    }
+
+    // The game is still fetching
+    if (!game) {
+        if (error === '') {
+            return <Message variant='info' message='Fetching Game ...'/>
+        } else {
+            return <Message variant='error' message={ error }/>
+        }
     }
     
     /**

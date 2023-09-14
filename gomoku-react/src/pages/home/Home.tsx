@@ -6,7 +6,7 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { API_HOST, MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '../../constants';
-import { Button } from '../../components';
+import { Button, Message } from '../../components';
 import { post } from '../../utility';
 
 import style from './Home.module.css';
@@ -17,6 +17,7 @@ import { UserContext } from '../../context';
  */
 export default function Home() {
     const [ boardSize, setBoardSize ] = useState(MIN_BOARD_SIZE);
+    const [ error, setError ] = useState('');
     const navigate = useNavigate();
 
     // Get the logged-in user from context
@@ -53,10 +54,15 @@ export default function Home() {
         if (!user) {
             navigate('/login');
         } else {
-            const gameId: string = await post(`${API_HOST}/games`, { 
-                size: boardSize
-            });
-            navigate('/game', { state: { gameId: gameId } });
+            try {
+                const gameId: string = await post(`${API_HOST}/games`, { 
+                    size: boardSize
+                });
+                navigate('/game', { state: { gameId: gameId } });
+                setError('');
+            } catch (error) {
+                setError((error as Error).message);
+            }
         }
     };
 
@@ -71,6 +77,7 @@ export default function Home() {
                 { generateBoardSizeOptions() }
             </select>
             <Button text='Start' buttonStyle='general' onClick={ handleStartGame } />
+            {error !== '' ? <Message variant='error' message={error} /> : <></>}
         </div>
     )
 }

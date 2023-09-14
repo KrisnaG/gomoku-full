@@ -22,6 +22,7 @@ export default function GameLog() {
     const [ game, setGame ] = useState<GameData>();
 
     const navigate = useNavigate();
+    const [ error, setError ] = useState('');
 
     // Fetch game details when the 'id' dependency changes.
     useEffect(() => {
@@ -33,9 +34,9 @@ export default function GameLog() {
             try {
                 const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
                 setGame(game);
+                setError('');
             } catch (error) {
-                console.log((error as Error).message);
-                navigate('/');
+                setError((error as Error).message);
             }
         }
         if (id) {
@@ -45,29 +46,39 @@ export default function GameLog() {
 
     // Get user information and handle unauthorised access
     const { user } = useContext(UserContext);
-    if (!user) return <Navigate to="/login" />
+    if (!user) return <Navigate to="/login" />  
 
-    
-
-    // If the game is not found, display a warning message
+    // The game is still fetching
     if (!game) {
-        return <Message variant='warning' message='Unable to find game!' />
+        if (error === '') {
+            return <Message variant='info' message='Fetching Game ...'/>
+        } else {
+            return <Message variant='error' message={ error }/>
+        }
+    }
+    
+    /**
+     * Gets the current player based on the game status.
+     */
+    const getPlayer = () => {
+        const words = game.status.split(' ') ;
+        return words[words.length - 1].toLocaleLowerCase(); 
     }
 
     /**
      * Get the results for the game.
      */
     const getGameResult = () => {
-        if (game.status === 'draw') {
+        if (getPlayer() === 'draw') {
             return `The game was a draw!`;
         } else {
-            return `The winner was ${game.status}!`
+            return `The winner was ${getPlayer()}!`
         }
     }
     
     return (
         <div className={ style.container }>
-            <Message variant={ game.status } message={ getGameResult() } />
+            <Message variant={ getPlayer() } message={ getGameResult() } />
             <Board 
                 boardSize={ game.size } 
                 board={ game.board } 
