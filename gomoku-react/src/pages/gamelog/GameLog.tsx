@@ -22,27 +22,26 @@ export default function GameLog() {
     const [ game, setGame ] = useState<GameData>();
 
     const navigate = useNavigate();
-    
-    /**
-     * Fetches game details from the server based on the provided gameId.
-     * @param gameId - The unique identifier of the game to fetch.
-     */
-    const fetchGameDetails = async (gameId: string) => {
-        try {
-            const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
-            setGame(game);
-        } catch (error) {
-            console.log((error as Error).message);
-            navigate('/');
-        }
-    }
-    
+
     // Fetch game details when the 'id' dependency changes.
     useEffect(() => {
+        /**
+         * Fetches game details from the server based on the provided gameId.
+         * @param gameId - The unique identifier of the game to fetch.
+         */
+        const fetchGameDetails = async (gameId: string) => {
+            try {
+                const game: GameData = await get<GameData>(`${API_HOST}/games/${gameId}`);
+                setGame(game);
+            } catch (error) {
+                console.log((error as Error).message);
+                navigate('/');
+            }
+        }
         if (id) {
             fetchGameDetails(id)
         }
-    }, [id]);
+    }, [id, navigate]);
 
     // Get user information and handle unauthorised access
     const { user } = useContext(UserContext);

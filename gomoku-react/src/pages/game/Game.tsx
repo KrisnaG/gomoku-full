@@ -43,7 +43,7 @@ export default function Game() {
     // Fetch game details on mount
     useEffect(() => {
         fetchGameDetails(gameId)
-    }, [])
+    }, [gameId])
     
     // Get the logged-in user from context
     const { user, logout } = useContext(UserContext);
